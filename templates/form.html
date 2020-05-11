@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+
+		<title>Weather Application</title>
+
+		<!-- Loading third party fonts -->
+		<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+		<link href="fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+		<!-- Loading main css file -->
+		 <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+
+		<!--[if lt IE 9]>
+		<script src="js/ie-support/html5.js"></script>
+		<script src="js/ie-support/respond.js"></script>
+		<![endif]-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="{{url_for('static', filename='js/form.js')}}"></script>
+
+	</head>
+
+
+	<body>
+
+		<div class="site-content" >
+			<div class="site-header" >
+				<div class="container">
+					<a href="index.html" class="branding">
+						<img src="{{ url_for('static',filename='images/logo.png') }}" alt="" class="logo">
+						<div class="logo-type">
+							<h1 class="site-title" style  = "font-size : 20px">What's the Weather like?</h1>
+							<small class="site-description" style  = "font-size : 18px">Lets find now</small>
+						</div>
+					</a>
+
+					<!-- Default snippet for navigation -->
+					<div class="main-navigation">
+						<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+						<ul class="menu">
+							<li class="menu-item current-menu-item"><a href="index.html">Home</a></li>
+							<li class="menu-item"><a href="news.html">News</a></li>
+							<li class="menu-item"><a href="live-cameras.html">Live cameras</a></li>
+							<li class="menu-item"><a href="photos.html">Photos</a></li>
+							<li class="menu-item"><a href="contact.html">Contact</a></li>
+						</ul> <!-- .menu -->
+					</div> <!-- .main-navigation -->
+
+					<div class="mobile-navigation"></div>
+
+				</div>
+			</div> <!-- .site-header -->
+
+			<div class="hero" style = "background-image: url({{ url_for('static',filename='images/banner12.jpg') }})">
+				<div class="container">
+					<form class="find-location" role = "form">
+						<input type="text" name='CityInput' id = "CityInput" placeholder="Find your City...">
+						<input type="submit" id = "submt-btn" value="Find">
+					</form>
+
+				</div>
+			</div>
+			<div id = "errorAlert">HI
+			</div>
+			<div id = "successAlert">HI
+			</div>
+
+			<div class="forecast-table">
+				<div class="container">
+					<div class="forecast-container">
+						<div class="today forecast">
+							<div class="forecast-header">
+								<div class="day">{{day}}</div>
+								<div class="date">{{date}}</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="location" id ="currentCity">{{current_city}}</div>
+								<div class="degree">
+									<div class="num" id = currentTemp>{{current_temp}}<sup>o</sup>C</div>
+									<div class="forecast-icon">
+										<img src="{{ url_for('static',filename='images/icons/icon-1.svg') }}" alt="" width=90>
+									</div>
+								</div>
+								<span><img src="{{ url_for('static',filename='images/icon-umberella.png') }}" alt="">{{current_humidity}}%</span>
+								<span><img src="{{ url_for('static',filename='images/icon-wind.png') }}" alt="">{{current_ws}}m/s</span>
+								<span><img src="{{ url_for('static',filename='images/icon-compass.png') }}" alt="">East</span>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+			<main class="main-content">
+				<div class="fullwidth-block">
+					<div class="container">
+						<h2 class="section-title">Live cameras</h2>
+						<div class="row">
+							<div class="col-md-3 col-sm-6">
+								<div class="live-camera">
+									<figure class="live-camera-cover"><img src="{{ url_for('static',filename='images/new_york.jpg') }}" alt=""></figure>
+									<h3 class="location">{{def_city[0]}}</h3>
+									<small class="date">{{times[0]}}</small>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-6">
+								<div class="live-camera">
+									<figure class="live-camera-cover"><img src="{{ url_for('static',filename='images/delhi2.jpg') }}" alt=""></figure>
+									<h3 class="location">{{def_city[1]}}</h3>
+									<small class="date">{{times[1]}}</small>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-6">
+								<div class="live-camera">
+									<figure class="live-camera-cover"><img src="{{ url_for('static',filename='images/chennai.jpg') }}" alt=""></figure>
+									<h3 class="location">{{def_city[2]}}</h3>
+									<small class="date">{{times[2]}}</small>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-6">
+								<div class="live-camera">
+									<figure class="live-camera-cover"><img src="{{ url_for('static',filename='images/london2.jpg') }}" alt=""></figure>
+									<h3 class="location">{{def_city[3]}}</h3>
+									<small class="date">{{times[3]}}</small>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="fullwidth-block" data-bg-color="#262936">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-4">
+								<div class="news">
+									<div class="date">06.10</div>
+									<h3><a href="#">Doloremque laudantium totam sequi </a></h3>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo saepe assumenda dolorem modi, expedita voluptatum ducimus necessitatibus. Asperiores quod reprehenderit necessitatibus harum, mollitia, odit et consequatur maxime nisi amet doloremque.</p>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="news">
+									<div class="date">06.10</div>
+									<h3><a href="#">Doloremque laudantium totam sequi </a></h3>
+									<p>Nobis architecto consequatur ab, ea, eum autem aperiam accusantium placeat vitae facere explicabo temporibus minus distinctio cum optio quis, dignissimos eius aspernatur fuga. Praesentium totam, corrupti beatae amet expedita veritatis.</p>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="news">
+									<div class="date">06.10</div>
+									<h3><a href="#">Doloremque laudantium totam sequi </a></h3>
+									<p>Enim impedit officiis placeat qui recusandae doloremque possimus, iusto blanditiis, quam optio delectus maiores. Possimus rerum, velit cum natus eos. Cumque pariatur beatae asperiores, esse libero quas ad dolorem. Voluptates.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</main> <!-- .main-content -->
+
+			<footer class="site-footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-8">
+							<form action="#" class="subscribe-form">
+								<input type="text" placeholder="Enter your email to subscribe...">
+								<input type="submit" value="Subscribe">
+							</form>
+						</div>
+						<div class="col-md-3 col-md-offset-1">
+							<div class="social-links">
+								<a href="#"><i class="fa fa-facebook"></i></a>
+								<a href="#"><i class="fa fa-twitter"></i></a>
+								<a href="#"><i class="fa fa-google-plus"></i></a>
+								<a href="#"><i class="fa fa-pinterest"></i></a>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</footer> <!-- .site-footer -->
+		</div>
+
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/plugins.js"></script>
+		<script src="js/app.js"></script>
+
+	</body>
+
+</html>
