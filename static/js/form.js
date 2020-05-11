@@ -11,13 +11,14 @@ $(document).ready(function() {
 			url : '/checkInput'
 		})
 		.done(function(data) {
-
+			console.log('Making decision');
 			if (data.error) {
 				$('#errorAlert').text(data.error).show();
 				$('#successAlert').hide();
 			}
 			else {
 				$('#currentCity').text(data.name).show();
+				$('#currentTemp').text(data.temp).show();
 				$('#errorAlert').hide();
 			}
 
