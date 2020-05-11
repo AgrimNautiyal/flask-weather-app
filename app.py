@@ -71,7 +71,7 @@ def display():
             wind_deg = weather['wind']['deg']
             print(weather)
             #return jsonify({'city' : city, 'temp' : temp, 'humidity' : humidity, 'pressure' : pressure, 'wind_speed' : ws, 'wind_direction' : wind_deg})
-            return jsonify({'name' : city, 'temp' : temp})
+            return jsonify({'name' : city, 'temp' : temp, 'hum' : str(humidity)+'%', 'ws' : str(ws)+"m/s"})
     except:
             return jsonify({'error' : 'Missing data!'})
 

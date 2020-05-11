@@ -19,6 +19,8 @@ $(document).ready(function() {
 			else {
 				$('#currentCity').text(data.name).show();
 				$('#currentTemp').text(data.temp).show();
+				$('#cH').text(data.hum).show();
+				$('#cW').text(data.ws).show();
 				$('#errorAlert').hide();
 			}
 
