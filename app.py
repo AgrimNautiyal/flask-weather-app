@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify
 from wtforms import Form, TextAreaField, validators
 import sqlite3
+import urllib.parse
 
 load_dotenv('.env')
 app = Flask(__name__)
@@ -26,6 +27,8 @@ def home():
 
         current_city = 'Delhi'
         url = "http://api.openweathermap.org/data/2.5/weather?q=" +current_city+"&units=metric&appid=" + str(app.config.get("API_KEY"))
+        url = url.replace(" ", "%20")
+        print(url)
         response = urllib.request.urlopen(url).read()
         weather = json.loads(response)
         current_temp = weather['main']['temp']
@@ -35,6 +38,7 @@ def home():
         coords =[]
         for i in def_city:
             url = "http://api.openweathermap.org/data/2.5/weather?q=" +i+"&units=metric&appid=" + str(app.config.get("API_KEY"))
+            url = url.replace(" ", "%20")
             response = urllib.request.urlopen(url).read()
             weather = json.loads(response)
             coord = [weather['coord']['lon'], weather['coord']['lat']]
@@ -61,6 +65,9 @@ def display():
     url = "http://api.openweathermap.org/data/2.5/weather?q=" +city+"&units=metric&appid=" + str(app.config.get("API_KEY"))
     try:
             #tested, environment variables are working as predicted
+            #url = urllib.parse.quote(url)
+            url = url.replace(" ", "%20")
+            print(url)
             response = urllib.request.urlopen(url).read()
             weather = json.loads(response)
             #parsed response to JSON
