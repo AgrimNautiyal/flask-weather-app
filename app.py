@@ -5,7 +5,7 @@ from datetime import datetime
 import urllib.request
 from timezonefinder import TimezoneFinder
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, flash
 from wtforms import Form, TextAreaField, validators
 import sqlite3
 import urllib.parse
@@ -57,7 +57,7 @@ def home():
             times.append(time .strftime("%I:%M %p"))
         #now to fill in the news palette for current city
         newsapi = NewsApiClient(api_key=str(app.config.get("NEWS_API")))
-        all_articles = newsapi.get_everything(q=current_city, sort_by='popularity')
+        all_articles = newsapi.get_everything(q=current_city, sort_by='relevancy')
         news_content = all_articles['articles'][0:3]
 
 
@@ -83,11 +83,9 @@ def display():
             wind_deg = weather['wind']['deg']
             #now to configure the news palette (top 3 new)
             newsapi = NewsApiClient(api_key=str(app.config.get("NEWS_API")))
-            all_articles = newsapi.get_everything(q=city, sort_by = 'popularity')
+            all_articles = newsapi.get_everything(q=city, sort_by = 'relevancy')
             news_content = all_articles['articles'][0:3]
-            #print(weather)
-            print("im processing news!")
-            print(news_content)
+
             news_title_0 = news_content[0]['title']
             news_title_1 = news_content[1]['title']
             news_title_2 = news_content[2]['title']
@@ -106,6 +104,7 @@ def display():
             'news_url0' : news_url0, 'news_url1' : news_url1, 'news_url2': news_url2
             })
     except:
+            flash('Invalid City. Please try again.')
             return jsonify({'error' : 'Missing data!'})
 
 @app.errorhandler(404)
