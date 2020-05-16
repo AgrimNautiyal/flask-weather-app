@@ -29,10 +29,9 @@ def home():
         current_city = 'Delhi'
         url = "http://api.openweathermap.org/data/2.5/weather?q=" +current_city+"&units=metric&appid=" + str(app.config.get("API_KEY"))
         url = url.replace(" ", "%20")
-        print(url)
         response = urllib.request.urlopen(url).read()
         weather = json.loads(response)
-        current_temp = weather['main']['temp']
+        current_temp = int(weather['main']['temp'])
         current_humidity = weather['main']['temp']
         current_ws = weather['wind']['speed']
         #now to find coords of each of above city and display time zone in the live cameras section
@@ -67,7 +66,7 @@ def home():
 #WEATHER DISPLAY LOGIC
 @app.route('/checkInput', methods = ['POST'])
 def display():
-    print('inside the rout!')
+    #print('inside the rout!')
     city = request.form['name']
     url = "http://api.openweathermap.org/data/2.5/weather?q=" +city+"&units=metric&appid=" + str(app.config.get("API_KEY"))
     try:
@@ -77,13 +76,11 @@ def display():
             response = urllib.request.urlopen(url).read()
             weather = json.loads(response)
             #parsed response to JSON
-            temp = weather['main']['temp']
+            temp = int(weather['main']['temp'])
             pressure = weather['main']['pressure']
             humidity = weather['main']['humidity']
             ws = weather['wind']['speed']
             wind_deg = weather['wind']['deg']
-            print(weather)
-            print(city)
             #now to configure the news palette (top 3 new)
             newsapi = NewsApiClient(api_key=str(app.config.get("NEWS_API")))
             all_articles = newsapi.get_everything(q=city, sort_by = 'popularity')
@@ -91,7 +88,23 @@ def display():
             #print(weather)
             print("im processing news!")
             print(news_content)
-            return jsonify({'name' : city, 'temp' : temp, 'hum' : str(humidity)+'%', 'ws' : str(ws)+"m/s", 'icon' : icon, 'news_content' : news_content})
+            news_title_0 = news_content[0]['title']
+            news_title_1 = news_content[1]['title']
+            news_title_2 = news_content[2]['title']
+
+            news_desc_0 = news_content[0]['description']
+            news_desc_1 = news_content[1]['description']
+            news_desc_2 = news_content[2]['description']
+
+            news_url0 = news_content[0]['url']
+            news_url1 = news_content[1]['url']
+            news_url2 = news_content[2]['url']
+            return jsonify({
+            'name' : city, 'temp' : temp, 'hum' : str(humidity)+'%', 'ws' : str(ws)+"m/s",
+            'news_title_0' : news_title_0, 'news_title_1' : news_title_1, 'news_title_2' : news_title_2,
+            'news_content_0' : news_desc_0, 'news_content_1' : news_desc_1, 'news_content_2' : news_desc_2,
+            'news_url0' : news_url0, 'news_url1' : news_url1, 'news_url2': news_url2
+            })
     except:
             return jsonify({'error' : 'Missing data!'})
 

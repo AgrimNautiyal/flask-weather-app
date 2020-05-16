@@ -21,9 +21,18 @@ $(document).ready(function() {
 				$('#currentTemp').text(data.temp).show();
 				$('#cH').text(data.hum).show();
 				$('#cW').text(data.ws).show();
-				$('#news_title_0').text(data.news_content[0]['title'])
-				$('#news_title_1').text(data.news_content[1]['title'])
-				$('#news_title_2').text(data.news_content[2]['title'])
+				$('#nt0').text(data.news_title_0).show();
+				$('#nt1').text(data.news_title_1).show();
+				$('#nt2').text(data.news_title_2).show();
+				console.log('updating news');
+				$('#nc0').text(data.news_content_0).show();
+				$('#nc1').text(data.news_content_1).show();
+				$('#nc2').text(data.news_content_2).show();
+
+				$('#nt0').attr("href", data.news_url0);
+				$('#nt1').attr("href", data.news_url1);
+				$('#nt2').attr("href", data.news_url2);
+				console.log('updated news!');
 				$('#errorAlert').hide();
 			}
 
