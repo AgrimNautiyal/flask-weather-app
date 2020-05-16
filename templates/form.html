@@ -65,8 +65,6 @@
 			</div>
 			<div id = "errorAlert">HI
 			</div>
-			<div id = "successAlert">HI
-			</div>
 
 			<div class="forecast-table">
 				<div class="container">
@@ -79,7 +77,7 @@
 							<div class="forecast-content">
 								<div class="location" id ="currentCity">{{current_city}}</div>
 								<div class="degree">
-									<div class="num" id = "currentTemp">{{current_temp}}<sup>o</sup>C</div>
+									<div class="num" id = "currentTemp">{{current_temp}}</div><span class = "num"><sup>o</sup>C</span>
 									<div class="forecast-icon">
 										<img src="{{ url_for('static',filename='images/icons/icon-1.svg') }}" alt="" width=90>
 									</div>
@@ -91,9 +89,59 @@
 						</div>
 
 
+
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Monday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="{{ url_for('static',filename='images/icons/icon-3.svg') }}" alt="" width=48>
+								</div>
+								<div class="degree">23<sup>o</sup>C</div>
+								<small>18<sup>o</sup></small>
+							</div>
+						</div>
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Tuesday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="{{ url_for('static',filename='images/icons/icon-5.svg') }}" alt="" width=48>
+								</div>
+								<div class="degree">23<sup>o</sup>C</div>
+								<small>18<sup>o</sup></small>
+							</div>
+						</div>
+						<div class="forecast">
+							<div class="forecast-header">
+								<div class="day">Wednesday</div>
+							</div> <!-- .forecast-header -->
+							<div class="forecast-content">
+								<div class="forecast-icon">
+									<img src="{{ url_for('static',filename='images/icons/icon-7.svg') }}" alt="" width=48>
+								</div>
+								<div class="degree">23<sup>o</sup>C</div>
+								<small>18<sup>o</sup></small>
+							</div>
+						</div>
+
+
+
+
+
+
+
 					</div>
 				</div>
 			</div>
+
+
+
+
+
+
 			<main class="main-content">
 				<div class="fullwidth-block">
 					<div class="container">
@@ -137,22 +185,22 @@
 							<div class="col-md-4">
 								<div class="news">
 									<div class="date">06.10</div>
-									<h3><a href="#">Doloremque laudantium totam sequi </a></h3>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo saepe assumenda dolorem modi, expedita voluptatum ducimus necessitatibus. Asperiores quod reprehenderit necessitatibus harum, mollitia, odit et consequatur maxime nisi amet doloremque.</p>
+									<h3 id = 'news_title_0'><a href={{news_content[0]['url']}}>{{news_content[0]['title']}} </a></h3>
+									<p id = 'news_content_0'>{{news_content[0]['description']}}</p>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="news">
 									<div class="date">06.10</div>
-									<h3><a href="#">Doloremque laudantium totam sequi </a></h3>
-									<p>Nobis architecto consequatur ab, ea, eum autem aperiam accusantium placeat vitae facere explicabo temporibus minus distinctio cum optio quis, dignissimos eius aspernatur fuga. Praesentium totam, corrupti beatae amet expedita veritatis.</p>
+									<h3 id = 'news_title_1'><a href={{news_content[1]['url']}}>{{news_content[1]['title']}} </a></h3>
+									<p id = 'news_content_1'>{{news_content[1]['description']}}</p>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="news">
 									<div class="date">06.10</div>
-									<h3><a href="#">Doloremque laudantium totam sequi </a></h3>
-									<p>Enim impedit officiis placeat qui recusandae doloremque possimus, iusto blanditiis, quam optio delectus maiores. Possimus rerum, velit cum natus eos. Cumque pariatur beatae asperiores, esse libero quas ad dolorem. Voluptates.</p>
+									<h3 id = 'news_title_2'><a href={{news_content[2]['url']}}>{{news_content[2]['title']}} </a></h3>
+									<p id = 'news_content_2'>{{news_content[2]['description']}}</p>
 								</div>
 							</div>
 						</div>

@@ -21,6 +21,9 @@ $(document).ready(function() {
 				$('#currentTemp').text(data.temp).show();
 				$('#cH').text(data.hum).show();
 				$('#cW').text(data.ws).show();
+				$('#news_title_0').text(data.news_content[0]['title'])
+				$('#news_title_1').text(data.news_content[1]['title'])
+				$('#news_title_2').text(data.news_content[2]['title'])
 				$('#errorAlert').hide();
 			}
 

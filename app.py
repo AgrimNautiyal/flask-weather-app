@@ -9,6 +9,7 @@ from flask import Flask, render_template, request, jsonify
 from wtforms import Form, TextAreaField, validators
 import sqlite3
 import urllib.parse
+from newsapi import NewsApiClient
 
 load_dotenv('.env')
 app = Flask(__name__)
@@ -55,7 +56,13 @@ def home():
             timezone = pytz.timezone(location)
             time = datetime.now(timezone)
             times.append(time .strftime("%I:%M %p"))
-        return render_template('form.html', def_city = def_city, times = times, day = day, date = date, current_city = current_city, current_temp = current_temp, current_humidity = current_humidity, current_ws = current_ws)
+        #now to fill in the news palette for current city
+        newsapi = NewsApiClient(api_key=str(app.config.get("NEWS_API")))
+        all_articles = newsapi.get_everything(q=current_city, sort_by='popularity')
+        news_content = all_articles['articles'][0:3]
+
+
+        return render_template('form.html', def_city = def_city, times = times, day = day, date = date, current_city = current_city, current_temp = current_temp, current_humidity = current_humidity, current_ws = current_ws, news_content = news_content)
 
 #WEATHER DISPLAY LOGIC
 @app.route('/checkInput', methods = ['POST'])
@@ -64,8 +71,7 @@ def display():
     city = request.form['name']
     url = "http://api.openweathermap.org/data/2.5/weather?q=" +city+"&units=metric&appid=" + str(app.config.get("API_KEY"))
     try:
-            #tested, environment variables are working as predicted
-            #url = urllib.parse.quote(url)
+
             url = url.replace(" ", "%20")
             print(url)
             response = urllib.request.urlopen(url).read()
@@ -77,8 +83,15 @@ def display():
             ws = weather['wind']['speed']
             wind_deg = weather['wind']['deg']
             print(weather)
-            #return jsonify({'city' : city, 'temp' : temp, 'humidity' : humidity, 'pressure' : pressure, 'wind_speed' : ws, 'wind_direction' : wind_deg})
-            return jsonify({'name' : city, 'temp' : temp, 'hum' : str(humidity)+'%', 'ws' : str(ws)+"m/s"})
+            print(city)
+            #now to configure the news palette (top 3 new)
+            newsapi = NewsApiClient(api_key=str(app.config.get("NEWS_API")))
+            all_articles = newsapi.get_everything(q=city, sort_by = 'popularity')
+            news_content = all_articles['articles'][0:3]
+            #print(weather)
+            print("im processing news!")
+            print(news_content)
+            return jsonify({'name' : city, 'temp' : temp, 'hum' : str(humidity)+'%', 'ws' : str(ws)+"m/s", 'icon' : icon, 'news_content' : news_content})
     except:
             return jsonify({'error' : 'Missing data!'})
 
